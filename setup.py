@@ -6,11 +6,13 @@ import os
 import sys
 
 py_version = sys.version_info
-version = ".".join([str(i) for i in __import__('pycongregate').__VERSION__])
+version = ".".join(
+    [str(i) for i in __import__('pykongregate').__VERSION__]
+)
 readme = os.path.join(os.path.dirname(__file__), 'README.rst')
 
 CLASSIFIERS = [
-    'Development Status :: 1- Planning',
+    'Development Status :: 1 - Planning',
     'Environment :: Console',
     'Intended Audience :: Developers',
     'License :: OSI Approved :: MIT License',

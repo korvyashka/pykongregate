@@ -1,3 +1,5 @@
 *.py[co]
 docs/_build
 *.bin
+build
+dist
