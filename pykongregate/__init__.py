@@ -1,4 +1,4 @@
-from .models import KongUser
+from .models import KongUser, KongApi
 
-__all__ = ["KongUser"]
+__all__ = ["KongUser", "KongApi"]
 __VERSION__ = (0, 0, 1)
