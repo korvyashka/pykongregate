@@ -1,4 +1,7 @@
-from .api import get_items_api, get_user_items_api
+from .api import (
+    get_items_api, get_user_items_api,
+    get_user_info_api
+)
 from .exceptions import ApiException
 
 
@@ -48,6 +51,13 @@ class KongApi(object):
             response['items']
         )
         return new_items
+
+    def get_user_info(self, username):
+        response = self.api_call(
+            get_user_info_api,
+            username
+        )
+        return response
 
     def api_call(self, method, *args, **kwargs):
         """
