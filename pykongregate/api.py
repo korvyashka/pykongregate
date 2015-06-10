@@ -1,10 +1,30 @@
 import requests
 import simplejson
+from simplejson.scanner import JSONDecodeError
+
+from .exceptions import NullResponseException
 
 
 GET_USER_ITEMS_URL = "http://www.kongregate.com/api/user_items.json"
 GET_ITEMS_URL = "http://www.kongregate.com/api/items.json"
 USER_INFO_URL = "http://www.kongregate.com/api/user_info.json"
+
+
+def _handle_request(url, params):
+    response = requests.get(
+        GET_USER_ITEMS_URL, params=params
+    )
+    try:
+        return simplejson.loads(response.text)
+    except JSONDecodeError:
+        raise NullResponseException(
+            "request_url: {url}. params: {params}. "
+            "Got unparsable response: {response}".format(
+                url=url,
+                params=params,
+                response=response.text,
+            )
+        )
 
 
 def get_user_items_api(user_id, api_key):
@@ -24,10 +44,8 @@ def get_user_items_api(user_id, api_key):
         'api_key': api_key,
         'user_id': user_id,
     }
-    response = requests.get(
-        GET_USER_ITEMS_URL, params=params
-    )
-    return simplejson.loads(response.text)
+    url = GET_USER_ITEMS_URL
+    return _handle_request(url, params)
 
 
 def get_items_api(api_key):
@@ -44,10 +62,8 @@ def get_items_api(api_key):
     params = {
         'api_key': api_key,
     }
-    response = requests.get(
-        GET_ITEMS_URL, params=params
-    )
-    return simplejson.loads(response.text)
+    url = GET_ITEMS_URL
+    return _handle_request(url, params)
 
 
 def get_user_info_api(username):
@@ -65,8 +81,5 @@ def get_user_info_api(username):
     params = {
         'username': username
     }
-    response = requests.get(
-        USER_INFO_URL, params=params
-    )
-
-    return simplejson.loads(response.text)
+    url = USER_INFO_URL
+    return _handle_request(url, params)

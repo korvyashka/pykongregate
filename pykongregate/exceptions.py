@@ -6,3 +6,10 @@ class ApiException(Exception):
         in response
     """
     pass
+
+
+class NullResponseException(Exception):
+    """
+    Request returned blank line.
+    """
+    pass

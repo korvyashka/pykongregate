@@ -107,10 +107,9 @@ class KongUser(object):
     def items(self, refetch=True):
         """
         Return items of user
-        :param refetch:
+        :param bool refetch:
             True: fetch kongregate
             False: fetch kongregate only if items is not cached
-        :type refetch: bool
 
         :rtype: list of KongItem
         :return:
@@ -121,7 +120,10 @@ class KongUser(object):
         self._items = new_items
         return new_items
 
-    def has_item(self, id=None, identifier=None):
+    def has_item(
+        self, id=None, identifier=None,
+        refetch=True
+    ):
         """
         Determines if user has item with criteria.
 
@@ -130,6 +132,9 @@ class KongUser(object):
         :param identifier: bank_item name. User can buy several of them.
             Return True if at least one is there.
         :type identifier: str
+        :param bool refetch:
+            True: fetch kongregate
+            False: fetch kongregate only if items is not cached
 
         :rtype: bool
         :return:
@@ -143,7 +148,7 @@ class KongUser(object):
         if id is None and identifier is None:
             return ValueError("Provide id or identifier")
 
-        items = self.items()
+        items = self.items(refetch=refetch)
         if id is not None:
             items = filter(_id_filter, items)
         if identifier is not None:

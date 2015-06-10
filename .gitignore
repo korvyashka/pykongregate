@@ -3,4 +3,5 @@ docs/_build
 *.bin
 build
 dist
+.tox
 *.egg-info

@@ -6,9 +6,14 @@ import os
 import sys
 
 py_version = sys.version_info
-version = ".".join(
-    [str(i) for i in __import__('pykongregate').__VERSION__]
-)
+try:
+    version = ".".join(
+        [str(i) for i in __import__('pykongregate').__VERSION__]
+    )
+except:
+    # Warning: used only for tox
+    version = "uknown"
+
 readme = os.path.join(os.path.dirname(__file__), 'README.rst')
 
 CLASSIFIERS = [
@@ -34,7 +39,7 @@ setup(
     author_email='korvyashka666@gmail.com',
 
     download_url='https://github.com/korvyashka/pykongregate.git',
-    description='python client for kongreate REST API',
+    description='python client for kongregate REST API',
     long_description=open(readme).read(),
     license='MIT license',
     platforms=['OS Independent'],
